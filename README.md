@@ -158,6 +158,13 @@ The tests cover the D2Q9 weights, equilibrium recovery, BGK collision, streaming
 - During development, Re=125, 150, 200, and 220 became numerically unstable with the present BGK formulation and discretization. These aborted cases are not considered physical results: execution was stopped when non-finite values appeared, and neither clipping nor artificial stabilization was used to conceal the divergence. This is an observation about the present implementation, resolution, and configuration—not a universal Reynolds-number limit for BGK. A TRT or MRT collision model would be a logical extension for improved robustness at lower viscosity and relaxation times closer to 0.5.
 - The current study is two-dimensional and does not represent three-dimensional wake transitions.
 
+## References
+
+The numerical formulation and implementation choices in this study were guided primarily by the following references.
+
+1. T. Krüger, H. Kusumaatmaja, A. Kuzmin, O. Shardt, G. Silva, and E. M. Viggen, *The Lattice Boltzmann Method: Principles and Practice*, Springer, 2017. DOI: [10.1007/978-3-319-44649-3](https://doi.org/10.1007/978-3-319-44649-3)
+2. A. A. Mohamad, *Lattice Boltzmann Method: Fundamentals and Engineering Applications with Computer Codes*, Springer, 1st edition, 2011. DOI: [10.1007/978-0-85729-455-5](https://doi.org/10.1007/978-0-85729-455-5)
+
 ## Reproducibility note
 
 New simulations can be run from a uniform initial state with the command-line interface shown above; no pre-existing checkpoint is required. Large `.npz` checkpoints are generated artifacts and are excluded from the public repository through `.gitignore`. Locally retained final checkpoints can be used to regenerate the comparison animation without rerunning the solver.
