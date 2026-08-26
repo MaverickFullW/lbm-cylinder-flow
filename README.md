@@ -28,31 +28,47 @@ The retained comparison checkpoints use:
 
 Here, `lu` denotes lattice units and `ts` denotes time steps. Nondimensional time and normalized spanwise vorticity are defined as
 
-```text
-t* = t U_inf / D
-omega_z* = omega_z D / U_inf
-```
+$$
+t^* = \frac{t U_\infty}{D}
+$$
+
+$$
+\omega_z^* = \frac{\omega_z D}{U_\infty}
+$$
 
 ## Numerical method
 
 The solver uses the standard D2Q9 velocity set and equilibrium distribution
 
-```text
-f_i^eq = w_i rho [1 + 3(e_i·u) + 4.5(e_i·u)^2 - 1.5(u·u)].
-```
+$$
+f_i^{eq} = w_i \rho
+\left[
+1
++ 3(\mathbf{e}_i \cdot \mathbf{u})
++ \frac{9}{2}(\mathbf{e}_i \cdot \mathbf{u})^2
+- \frac{3}{2}(\mathbf{u} \cdot \mathbf{u})
+\right]
+$$
 
 The BGK collision step is
 
-```text
-f_i^post = f_i - (f_i - f_i^eq) / tau,
-```
+$$
+f_i^{post} = f_i
+- \frac{1}{\tau}
+\left(
+f_i - f_i^{eq}
+\right)
+$$
 
 with viscosity and relaxation time computed from the requested Reynolds number:
 
-```text
-nu = U_inf D / Re
-tau = 3 nu + 0.5
-```
+$$
+\nu = \frac{U_\infty D}{Re}
+$$
+
+$$
+\tau = 3\nu + \frac{1}{2}
+$$
 
 Boundary treatment and derived quantities:
 
@@ -60,7 +76,20 @@ Boundary treatment and derived quantities:
 - Zou/He velocity condition at the inlet.
 - Open right boundary reconstructed from the adjacent interior column.
 - Momentum exchange for cylinder force.
-- Drag and lift coefficients based on `0.5 U_inf^2 D`.
+- In this two-dimensional model, the drag and lift coefficients per unit length are defined as
+
+$$
+C_D =
+\frac{F_x}
+{\frac{1}{2}\rho_\infty U_\infty^2 D}
+$$
+
+$$
+C_L =
+\frac{F_y}
+{\frac{1}{2}\rho_\infty U_\infty^2 D}
+$$
+
 - Spanwise vorticity computed from the velocity gradients.
 - Finite-value checks on particle distributions, density, and velocity throughout a run.
 
@@ -127,27 +156,6 @@ python -m pytest
 ```
 
 The tests cover the D2Q9 weights, equilibrium recovery, BGK collision, streaming, bounce-back behavior, momentum-exchange force, inlet and outlet conditions, and macroscopic-variable recovery.
-
-## Project structure
-
-```text
-.
-├── data/                         # Retained figures, animation, and local checkpoints
-├── docs/
-│   └── grid_convergence.md       # Documented two-level grid-sensitivity study
-├── src/
-│   ├── animate_reynolds_comparison.py
-│   ├── animate_vorticity.py
-│   ├── geometry.py               # Domain and cylinder mask
-│   ├── lbm.py                    # D2Q9 operators and boundary treatment
-│   ├── plot_force_history.py
-│   └── simulation.py             # Command-line simulation runner
-├── tests/
-│   └── test_lbm.py
-├── .gitignore
-├── requirements.txt
-└── README.md
-```
 
 ## Limitations
 
