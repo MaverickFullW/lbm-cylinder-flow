@@ -41,23 +41,13 @@ $$
 The solver uses the standard D2Q9 velocity set and equilibrium distribution
 
 $$
-f_i^{eq} = w_i \rho
-\left[
-1
-+ 3(\mathbf{e}_i \cdot \mathbf{u})
-+ \frac{9}{2}(\mathbf{e}_i \cdot \mathbf{u})^2
-- \frac{3}{2}(\mathbf{u} \cdot \mathbf{u})
-\right]
+f\_i^{eq} = w\_i \rho \left[ 1 + 3(\mathbf{e}\_i \cdot \mathbf{u}) + \frac{9}{2}(\mathbf{e}\_i \cdot \mathbf{u})^2 - \frac{3}{2}(\mathbf{u} \cdot \mathbf{u}) \right]
 $$
 
 The BGK collision step is
 
 $$
-f_i^{post} = f_i
-- \frac{1}{\tau}
-\left(
-f_i - f_i^{eq}
-\right)
+f\_i^{post} = f\_i - \frac{1}{\tau}\left(f\_i - f\_i^{eq}\right)
 $$
 
 with viscosity and relaxation time computed from the requested Reynolds number:
